@@ -1,0 +1,4 @@
+Revisar los test cases del enunciado (los ultimos 2)
+--> Voy a tener que arreglar las funciones de isTNum y las de sumas creo
+Crear los mensajes de error
+P3

@@ -1,0 +1,67 @@
+#lang play
+(require "machine.rkt")
+(print-only-errors #t)
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Language definition
+;;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+<s-expr> ::= <num>
+         | <id>
+         | {+ <s-expr> <s-expr>}
+         | {- <s-expr> <s-expr>}
+         | {with {<s-expr> : <type> <s-expr>} <s-expr>}
+         | {fun {<id>  : <type>} [: <type>] <expr>}
+         | {<expr> <expr>}
+
+<type> ::= Num
+         | {<type> -> <type>}
+|#
+(deftype Expr
+  (num n)
+  (add l r)
+  (sub l r)
+  (id s)
+  (fun id targ body tbody)
+  (fun-db body)
+  (acc n) ;Se usa para la pregunta 3
+  (app fun-id arg-expr))
+
+(deftype Type
+  (TNum)
+  (TFun arg ret))
+
+#|
+1. Funciones de primera clase con tipos declarados
+|#
+(define (parse-type type)
+  (match type
+    [(? 'Num?) (TNum type)]
+    [(list 'Num arrow r) (TFun (parse-type 'Num) (parse-type r))]
+    ))
+
+(define (parse s-expr)
+  (match s-expr
+    [(? number?) (num s-expr)]
+    [(? symbol?) (id s-expr)]
+    [(list '+ l r) (add (parse l) (parse r))]
+    [(list '- l r) (sub (parse l) (parse r))]
+    ))
+
+(define (prettify type) #f)
+
+#|
+2. Verificación de Tipos
+|#
+(define (typeof expr) #f)
+
+(define (typecheck s-expr) #f)
+
+#|
+3. Compilación
+|#
+(define (deBruijn expr) #f)
+
+(define (compile expr) #f)
+
+(define (typed-compile s-expr) #f)
